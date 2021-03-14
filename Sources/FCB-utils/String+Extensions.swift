@@ -7,10 +7,15 @@
 
 import Foundation
 
-extension String {
+public extension String {
     static func minifiedFrom(contentOf path: String) throws -> String {
         let content = try String(contentsOfFile: path)
         return content.components(separatedBy: .newlines).joined()
+    }
+
+
+    var trimWhitespaces: String {
+        return trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     var pairs: [String] {
@@ -53,5 +58,22 @@ extension String {
         }
 
         return result
+    }
+
+
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+
+    func lowercasingFirstLetter() -> String {
+        return prefix(1).lowercased() + dropFirst()
+    }
+
+    mutating func lowercaseFirstLetter() {
+        self = self.lowercasingFirstLetter()
     }
 }
