@@ -13,7 +13,6 @@ public extension String {
         return content.components(separatedBy: .newlines).joined()
     }
 
-
     var trimWhitespaces: String {
         return trimmingCharacters(in: .whitespacesAndNewlines)
     }
@@ -25,10 +24,6 @@ public extension String {
             result.append(String(characters[$0..<min($0+2, count)]))
         }
         return result
-    }
-
-    var trimeWhitespaces: String {
-        return trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     var isBool: Bool {
