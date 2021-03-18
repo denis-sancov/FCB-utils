@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Bundle {
+public extension Bundle {
     var appName: String {
         return infoDictionary?["CFBundleName"] as! String
     }
