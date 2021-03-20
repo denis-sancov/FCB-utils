@@ -55,6 +55,6 @@ public extension Currency {
     static let EUR = Currency(code: "EUR")!
 }
 
-public func ==(lhs: Currency, rhs: Currency) -> Bool {
+public func == (lhs: Currency, rhs: Currency) -> Bool {
     return lhs.numeric == rhs.numeric
 }
