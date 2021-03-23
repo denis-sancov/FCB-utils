@@ -14,9 +14,7 @@ final class Currencies {
     private let map: [Int16: String]
 
     private init() {
-        let bundle = Bundle(for: Self.self)
-
-        guard let path = bundle.path(forResource: "ISO-4217", ofType: "plist") else {
+        guard let path = Bundle.module.path(forResource: "ISO-4217", ofType: "plist") else {
             fatalError("ISO-4217.plist file doesn't exists")
         }
 
