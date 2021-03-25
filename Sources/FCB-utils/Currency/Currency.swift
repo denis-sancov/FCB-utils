@@ -11,23 +11,22 @@ import Foundation
 public struct Currency: Equatable, Codable {
     public let code: String
     public let numeric: Int16
+    public let symbol: String
 
     public init?(code: String) {
-        guard let value = Currencies.shared.numericFor(code: code) else {
+        guard let currency = Currencies.shared.by(code: code) else {
             return nil
         }
 
-        self.numeric = value
-        self.code = code
+        self = currency
     }
 
     public init?(numeric: Int16) {
-        guard let value = Currencies.shared.codeFor(numeric: numeric) else {
+        guard let currency = Currencies.shared.by(numeric: numeric) else {
             return nil
         }
 
-        self.code = value
-        self.numeric = numeric
+        self = currency
     }
 
     public init?(iban: String?) {
@@ -39,13 +38,11 @@ public struct Currency: Equatable, Codable {
             return nil
         }
 
-        guard let value = Currencies.shared.codeFor(numeric: numeric) else {
+        guard let currency = Currencies.shared.by(numeric: numeric) else {
             return nil
         }
 
-
-        self.code = value
-        self.numeric = numeric
+        self = currency
     }
 }
 

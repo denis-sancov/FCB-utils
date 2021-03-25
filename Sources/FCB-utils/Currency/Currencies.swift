@@ -8,43 +8,35 @@
 
 import Foundation
 
-final class Currencies {
+struct Currencies {
     static let shared = Currencies()
 
-    private let map: [Int16: String]
+    private let currencies: [Currency]
 
     private init() {
-        guard let path = Bundle.module.path(forResource: "ISO-4217", ofType: "plist") else {
+        guard let url = Bundle.module.url(forResource: "ISO-4217", withExtension: "plist") else {
             fatalError("ISO-4217.plist file doesn't exists")
         }
 
-        guard let content = NSArray(contentsOfFile: path) as? [[String: Any]] else {
-            fatalError("Data from ISO-4217.plist can not be read")
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            
+            currencies = try decoder.decode([Currency].self, from: data)
         }
+        catch {
+            currencies = []
 
-        var buffer = [Int16: String]()
-        buffer.reserveCapacity(content.count)
-
-        content.forEach {
-            let tmpId = $0["digitsCode"] as? String
-            let tmpCode = $0["currencyCode"] as? String
-
-            guard let id = Int16(tmpId ?? ""), let code = tmpCode else {
-                return
-            }
-
-            buffer[id] = code
+            print(error)
         }
-
-        self.map = buffer
     }
 
-    func numericFor(code: String) -> Int16? {
-        return map.first { $0.value == code }?.key
+    func by(code: String) -> Currency? {
+        return currencies.first { $0.code == code }
     }
 
-    func codeFor(numeric: Int16) -> String? {
-        return map[numeric]
+    func by(numeric: Int16) -> Currency? {
+        return currencies.first { $0.numeric == numeric }
     }
 }
 
