@@ -11,8 +11,8 @@ public typealias EmptyState = State<Void>
 
 public enum State<T> {
     case success(T)
-    case loading(T?)
-    case failed(err: Error, T?)
+    case loading(T? = nil)
+    case failed(err: Error, T? = nil)
 
     public var data: T? {
         switch self {
